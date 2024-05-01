@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   const projects = await Project.find();
   res.send(projects);
 });
