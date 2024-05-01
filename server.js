@@ -18,5 +18,7 @@ app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use(error);
 
+require("./startup/prod")(app);
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
