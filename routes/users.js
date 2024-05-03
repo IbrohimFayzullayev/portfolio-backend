@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.get("/me", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
-  res.send(user);
+  res.send(_.pick(user, ["name", "isAdmin", "email"]));
 });
 
 router.get("/", auth, async (req, res) => {
   const users = await User.find().select("-password");
-  res.send(users);
+  res.send(_.pick(users, ["name", "isAdmin", "email"]));
 });
 
 router.get("/:id", auth, async (req, res) => {

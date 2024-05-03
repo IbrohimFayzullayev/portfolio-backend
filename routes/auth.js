@@ -10,16 +10,23 @@ router.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ name: req.body.name });
-  if (!user) return res.status(400).send("Invalid name or password.");
+  if (!user)
+    return res.status(400).send({
+      message: "Invalid name or password.",
+    });
 
-  const validaPassword = await bcrypt.compare(req.body.password, user.password);
-  if (!validaPassword) return res.status(400).send("Invalid name or password.");
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword)
+    return res.status(400).send({
+      message: "Invalid name or password.",
+    });
 
   const token = user.generateAuthToken();
 
-  res
-    .header("x-auth-token", token)
-    .send(_.pick(user, ["name", "email", "isAdmin"]));
+  res.header("x-auth-token", token).send({
+    user: _.pick(user, ["_id", "name", "email", "isAdmin"]),
+    token: token,
+  });
 });
 
 function validate(req) {

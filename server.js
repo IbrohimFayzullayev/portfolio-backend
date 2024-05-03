@@ -4,6 +4,7 @@ const projects = require("./routes/projects");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
 const error = require("./middleware/error");
+const cors = require("cors");
 const app = express();
 
 // Connect to MongoDB
@@ -13,6 +14,7 @@ mongoose
   .catch(() => console.error("Error connecting to MongoDB...."));
 
 app.use(express.json());
+app.use(cors());
 app.use("/api/projects", projects);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
