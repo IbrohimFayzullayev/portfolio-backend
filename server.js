@@ -13,8 +13,15 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch(() => console.error("Error connecting to MongoDB...."));
 
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
 app.use("/api/projects", projects);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
