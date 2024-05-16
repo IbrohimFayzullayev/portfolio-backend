@@ -11,7 +11,7 @@ router.get("/me", auth, async (req, res) => {
   res.send(_.pick(user, ["name", "isAdmin", "email"]));
 });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   const users = await User.find().select("-password");
   res.send(_.pick(users, ["name", "isAdmin", "email"]));
 });
